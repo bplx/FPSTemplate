@@ -1,13 +1,37 @@
 extends KinematicBody
+
 export var Sprint_Speed = 4
 export var Normal_Speed = 2
 export var GRAVITY = 10
 export var JUMPFORCE = 10
-
+onready var head = $Head
+onready var hand = $Head/Hand
+onready var shootraycast = $Head/shootraycast
 var SPEED = 10
 var mouse_sensitivity = 0.01 / 2
 
 var velocity = Vector3(0, 0, 0)
+
+func gun_check_collision(shootrange):
+	shootraycast.cast_to = Vector3(0, 0, shootrange)
+	shootraycast.force_raycast_update()
+	return shootraycast.get_collider()
+	
+func check_for_weapon(name):
+	for i in hand.get_children():
+		if i.name == name:
+			return true
+	return false
+
+func get_weapon(name):
+
+	return Guns.guns[name]
+	
+func give_weapon(name):
+	if !check_for_weapon(name):
+		var gun_to_give = get_weapon(name)
+		var instancedgun = gun_to_give.instance()
+		hand.add_child(instancedgun)
 
 func handle_input(delta):
 	var input_dir = Vector3(0, 0, 0)
@@ -21,6 +45,7 @@ func handle_input(delta):
 	if Input.is_action_pressed("Right"):
 		input_dir += -global_transform.basis.x * delta
 	if Input.is_action_pressed("Sprint"):
+		give_weapon("Pistol")
 		SPEED = Sprint_Speed * 5
 	
 	if Input.is_action_just_pressed("Jump") and is_on_floor():

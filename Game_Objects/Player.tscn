@@ -14,7 +14,6 @@ height = 2.04
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
 GRAVITY = 1
-SPEED = 5
 JUMPFORCE = 25
 
 [node name="Body" type="CSGMesh" parent="."]
@@ -32,6 +31,26 @@ material/0 = null
 [node name="Camera" type="Camera" parent="Head"]
 transform = Transform( -0.999999, -0.000216319, 0.00110495, -0.000214367, 0.999998, 0.00176612, -0.00110533, 0.00176589, -0.999998, 0.0111051, 0.0180078, 0.00135517 )
 
+[node name="Hand" type="Spatial" parent="Head"]
+transform = Transform( -0.107687, 0, 0.994185, 0, 1, 0, -0.994185, 0, -0.107687, -0.705664, -0.563497, 1.4668 )
+
+[node name="shootraycast" type="RayCast" parent="Head"]
+cast_to = Vector3( 0, 0, 10 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 3 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Ammo" type="Label" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+margin_top = -14.0
+text = "2/5"
+__meta__ = {
+"_edit_use_anchors_": false
+}

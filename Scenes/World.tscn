@@ -12,12 +12,53 @@ Sprint_Speed = 2
 Normal_Speed = 1
 JUMPFORCE = 20
 
+[node name="TestBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20431, 14.3098 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox2" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08022, 1.20431, 14.3098 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox3" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.43307, 1.20431, 14.3098 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox4" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.43167, 3.57146, 14.3531 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox5" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14186, 3.68693, 14.249 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox6" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18639, 3.87762, 14.249 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox7" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0432926, 6.7665, 14.249 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox8" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04342, 6.72804, 14.249 )
+use_collision = true
+material = ExtResource( 2 )
+
+[node name="TestBox9" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.31125, 6.74043, 14.249 )
+use_collision = true
+material = ExtResource( 2 )
+
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
-
-[node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20431, 14.3098 )
-material = ExtResource( 2 )
 
 [node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
 transform = Transform( 2057.09, 0, 0, 0, 1, 0, 0, 0, 155.189, 0, -4.94482, 0 )
