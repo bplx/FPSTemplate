@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Pistol.gd" type="Script" id=1]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.709804, 0.709804, 0.709804, 1 )
+
+[sub_resource type="Animation" id=3]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Model:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 0.0398299, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 85.071, 86.667, -8.74 ), Vector3( 15.4481, 89.703, -5.49838 ), Vector3( 85.5282, 86.3267, -9.08149 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Model:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+
+[node name="Sword" type="Spatial"]
+script = ExtResource( 1 )
+FIRE_RATE = 0.5
+FIRE_RANGE = 3
+Name = "Sword"
+MODE = "Melee"
+
+[node name="Model" type="MeshInstance" parent="."]
+transform = Transform( 0.0118251, -0.228894, -0.106987, 0.00164822, -0.0195972, 1.24267, 0.125678, 0.0217938, -0.00623066, -0.137385, 0.521802, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fire = SubResource( 3 )

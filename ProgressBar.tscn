@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="ProgressBar" type="ProgressBar"]
+margin_right = 207.0
+margin_bottom = 31.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

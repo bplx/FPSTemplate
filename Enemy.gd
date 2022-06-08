@@ -2,16 +2,21 @@ extends KinematicBody
 
 var weapons
 
+var target
+var path = []
+var path_node = 0
 export var Sprint_Speed = 4
 export var Normal_Speed = 2
 export var GRAVITY = 10
 export var JUMPFORCE = 10
+onready var player = get_node("/root/World/Player")
+onready var nav = get_parent()
 onready var head = $Head
 onready var hand = $Head/Hand
 onready var shootraycast = $Head/shootraycast
-onready var healthbar = $HUD/NormalHUD/HealthBar
+onready var healthbar = $Health/Viewport/HealthBar
 
-var health = 100
+var health = 80
 var active = true
 var dead = false
 var selectedweapon = 1
@@ -34,18 +39,14 @@ func get_gun_count():
 
 func choose_weapon():
 	
-	if Input.is_action_just_pressed("Weapon 1"):
-		if typeof(weapons[0]) != TYPE_STRING and selectedweapon != 1:
-			hand.swap = true
-			selectedweapon = 1
-	if Input.is_action_just_pressed("Weapon 2"):
-		if typeof(weapons[1]) != TYPE_STRING and selectedweapon != 2:
-			hand.swap = true
-			selectedweapon = 2
-	if Input.is_action_just_pressed("Weapon 3"):
-		if typeof(weapons[2]) != TYPE_STRING and selectedweapon != 3:
-			hand.swap = true
-			selectedweapon = 3
+	# weapon code goes here
+	
+	if selectedweapon == 1:
+		selectedweapon = 2
+	if selectedweapon == 2:
+		selectedweapon = 3
+	if selectedweapon == 3:
+		selectedweapon = 1
 		
 func get_gun_type(index):
 	return hand.get_child(index).MODE
@@ -100,7 +101,6 @@ func check_for_weapon(name):
 	return false
 
 func get_weapon(name):
-
 	return Guns.guns[name]
 	
 func give_weapon(name):
@@ -110,23 +110,15 @@ func give_weapon(name):
 			var instancedgun = gun_to_give.instance()
 			hand.add_child(instancedgun)
 
+func get_to(target_pos):
+	path = nav.get_simple_path(global_transform.origin, target_pos)
+	path_node = 0
+
 func handle_input(delta):
 	var input_dir = Vector3(0, 0, 0)
 	
-	if Input.is_action_pressed("Forward"):
-		input_dir += global_transform.basis.z * delta
-	if Input.is_action_pressed("Backward"):
-		input_dir += -global_transform.basis.z * delta
-	if Input.is_action_pressed("Left"):
-		input_dir += global_transform.basis.x * delta
-		
-	if Input.is_action_pressed("Right"):
-		input_dir += -global_transform.basis.x * delta
-	if Input.is_action_pressed("Sprint"):
-		SPEED = Sprint_Speed * 5
-	
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
-		input_dir += global_transform.basis.y
+	# navigation here!
+	input_dir.x += 1
 		
 	input_dir = input_dir.normalized()
 	return input_dir
@@ -143,15 +135,15 @@ func handle_mouse_movement(ev):
 func _physics_process(delta):
 	if active == true:
 		if dead == false:
-			$HUD/NormalHUD.visible = true
-			$HUD/DeadHUD.visible = false
-			healthbar.value = health
+
+					
+			visible = true
 			weapons = ["filler", 1, 2]
 			
 			if health <= 0:
 				dead = true
 
-			print(dead)
+			print(health)
 			
 			if hand.get_child_count() > 0:
 				weapons[0] = hand.get_child(0)
@@ -174,31 +166,34 @@ func _physics_process(delta):
 
 			velocity.y -= GRAVITY
 
-			velocity.x += handle_input(delta).x * SPEED
-			velocity.y += handle_input(delta).y * JUMPFORCE
-			velocity.z += handle_input(delta).z * SPEED
+			#velocity.x += handle_input(delta).x * SPEED
+			#velocity.y += handle_input(delta).y * JUMPFORCE
+			#velocity.z += handle_input(delta).z * SPEED
 			
 			velocity.x = velocity.x * 0.8
 			velocity.z = velocity.z * 0.8
 			
-			velocity = move_and_slide(velocity, Vector3.UP)
-		elif dead == true:
-			$CollisionShape.disabled = true
-			visible = false
-			$HUD/DeadHUD.visible = true
-			$HUD/NormalHUD.visible = false
-	else:
-		$CollisionShape.disabled = true
-		visible = false
-		pass
-func _input(event):
-	if active == true:
-		if dead == false:
-			if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-				handle_mouse_movement(event)
-			
-			if event is InputEventMouseButton:
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-		if Input.is_action_just_pressed("ui_cancel"):
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)	
+			if path_node < path.size():
+				var direction = (path[path_node] - global_transform.origin)
+				if direction.length() < 1:
+					path_node += 1
+				else:
+					move_and_slide(direction.normalized() * SPEED, Vector3.UP)
+			look_at(player.global_transform.origin, Vector3.UP)
+			self.rotate_object_local(Vector3(0,1,0), 3.14)
+			rotation.x = 0
+			healthbar.value = health
+		elif dead == true:
+			healthbar.value = 0
+			visible = false
+	else:
+		pass
+
+
+func _on_Timer_timeout():
+	get_to(player.global_transform.origin)
+	
+	#$Head.look_at(player.global_transform.origin, Vector3.UP)
+	
+	pass # Replace with function body.

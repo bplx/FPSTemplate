@@ -1,14 +1,10 @@
-extends Node
+extends Area
 
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var guns = {
-	"Pistol": load("res://Weapons/Pistol.tscn"),
-	"M14": load("res://Weapons/M14.tscn"),
-	"Sword": load("res://Weapons/Sword.tscn")
-}
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

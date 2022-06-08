@@ -1,7 +1,4 @@
 extends Weapon
 
 func _ready():
-	print("Gun pistol loaded")
-
-
-
+	print("Gun M14 loaded")

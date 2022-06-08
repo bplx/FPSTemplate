@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Images/crosshair010.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/gnuolane rg.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://Scripts/Hand.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleMesh" id=1]
 mid_height = 2.064
@@ -10,6 +13,52 @@ size = Vector3( 1.598, 0.81, 1.334 )
 
 [sub_resource type="CapsuleShape" id=3]
 height = 2.04
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.164706, 0.164706, 0.164706, 0.588235 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=5]
+size = 100
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 100
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0.87451, 0.0431373, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.164706, 0.164706, 0.164706, 0.588235 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="DynamicFont" id=11]
+size = 100
+font_data = ExtResource( 3 )
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -32,7 +81,12 @@ material/0 = null
 transform = Transform( -0.999999, -0.000216319, 0.00110495, -0.000214367, 0.999998, 0.00176612, -0.00110533, 0.00176589, -0.999998, 0.0111051, 0.0180078, 0.00135517 )
 
 [node name="Hand" type="Spatial" parent="Head"]
-transform = Transform( -0.107687, 0, 0.994185, 0, 1, 0, -0.994185, 0, -0.107687, -0.705664, -0.563497, 1.4668 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.319916, 1.35664 )
+script = ExtResource( 4 )
+player_path = NodePath("../..")
+camera_path = NodePath("../Camera")
+default_position = Vector3( -0.706, -0.563, 1.467 )
+ads_position = Vector3( 0, -0.32, 1.357 )
 
 [node name="shootraycast" type="RayCast" parent="Head"]
 cast_to = Vector3( 0, 0, 10 )
@@ -43,14 +97,149 @@ shape = SubResource( 3 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Ammo" type="Label" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 1.0
+[node name="NormalHUD" type="Control" parent="HUD"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -40.0
-margin_top = -14.0
-text = "2/5"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TextureRect" type="TextureRect" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.5
+margin_top = -16.5
+margin_right = 16.5
+margin_bottom = 16.5
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel2" type="Panel" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -138.638
+margin_top = -161.129
+margin_right = 139.362
+margin_bottom = -3.12897
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ammo1" type="Label" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -57.6812
+margin_top = -118.803
+margin_right = -17.6812
+margin_bottom = 2.19672
+grow_horizontal = 0
+grow_vertical = 0
+custom_fonts/font = SubResource( 5 )
+text = "2"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -54.4664
+margin_top = -154.407
+margin_right = 54.5336
+margin_bottom = -105.407
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 6 )
+text = "Shotgun"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ammo2" type="Label" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 17.0698
+margin_top = -119.471
+margin_right = 57.0698
+margin_bottom = 1.52936
+custom_fonts/font = SubResource( 7 )
+text = "2"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -3.30347
+margin_top = -99.7989
+margin_right = 3.69653
+margin_bottom = -16.7986
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/NormalHUD"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -136.638
+margin_top = -201.129
+margin_right = 137.362
+margin_bottom = -169.129
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+step = 0.011
+value = 0.33
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeadHUD" type="Control" parent="HUD"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="HUD/DeadHUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="HUD/DeadHUD/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -124.0
+margin_top = -60.5
+margin_right = 124.0
+margin_bottom = 60.5
+custom_fonts/font = SubResource( 11 )
+text = "YA DIED"
+align = 1
+valign = 1
